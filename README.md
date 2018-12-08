@@ -6,6 +6,8 @@ A repository for holding Alpine Linux specific assets for UserLAnd
 if you have an arm device that runs linux please fork and use
 the script below then change ARCH=86x_64 to armhf or aarch64
  
+--> Alpine Script: https://github.com/CypherpunkArmory/UserLAnd-Assets-Alpine/blob/master/Alpine.sh
+
 ### Notes:
 Version: V1.0
 
