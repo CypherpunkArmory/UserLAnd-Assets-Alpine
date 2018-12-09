@@ -6,7 +6,7 @@ export ROOTFS_DIR=$ARCH_DIR/rootfs
 case "$1" in
     armhf) export DEBOOTSTRAP_ARCH=armv7h
         ;;
-    aarch64) export DEBOOTSTRAP_ARCH=arm64
+    aarch64) export DEBOOTSTRAP_ARCH=aarch64
         ;;
     x86) export DEBOOTSTRAP_ARCH=i386
         ;;
