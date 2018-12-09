@@ -10,7 +10,7 @@ case "$1" in
     aarch64) export ARCH_BOOTSTRAP_ARCH_OPT=aarch64
         export ARCH_BOOTSTRAP_QEMU_OPT=-q
         ;;
-    x86) export ARCH_BOOTSTRAP_ARCH_OPT=i686
+    x86) export ARCH_BOOTSTRAP_ARCH_OPT=i386
         ;;
     x86_64) export ARCH_BOOTSTRAP_ARCH_OPT=x86_64
         ;;
@@ -29,7 +29,7 @@ mkdir -p $ROOTFS_DIR
 git clone https://github.com/tokland/arch-bootstrap.git $ARCH_DIR/arch-bootstrap
 $ARCH_DIR/arch-bootstrap/arch-bootstrap.sh $ARCH_BOOTSTRAP_QEMU_OPT -a $ARCH_BOOTSTRAP_ARCH_OPT $ROOTFS_DIR
 
-LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR pacman -S sudo dropbear tigervnc xterm xorg-twm expect --noconfirm
+LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR sudo apk add dropbear tigervnc xterm xorg-twm expect --noconfirm
 
 echo "127.0.0.1 localhost" > $ROOTFS_DIR/etc/hosts
 echo "nameserver 8.8.8.8" > $ROOTFS_DIR/etc/resolv.conf
