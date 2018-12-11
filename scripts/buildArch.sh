@@ -1,17 +1,23 @@
 #! /bin/bash
 
+MIRROR=http://dl-5.alpinelinux.org/alpine
+ARCH=x86_64
+CHROOT=alpine-chroot-newest
+VERSION=latest-stable
+APK_TOOL=apk-tools-static-2.10.1-r0.apk
+
 export ARCH_DIR=output/${1}
 export ROOTFS_DIR=$ARCH_DIR/rootfs
 
 case "$1" in
-    ) export ARCH_BOOTSTRAP_ARCH_OPT=armv7h
+    armhf) export ARCH_BOOTSTRAP_ARCH_OPT=armv7h
         export ARCH_BOOTSTRAP_QEMU_OPT=-q
         ;;
-    aarch64) export ARCH_BOOTSTRAP_ARCH_OPT=aarch64
-        export ARCH_BOOTSTRAP_QEMU_OPT=-q
-        ;;
-    x86) export ARCH_BOOTSTRAP_ARCH_OPT=i386
-        ;;
+#   arm64) export ARCH_BOOTSTRAP_ARCH_OPT=aarch64
+#      export ARCH_BOOTSTRAP_QEMU_OPT=-q
+#       ;;
+#    x86) export ARCH_BOOTSTRAP_ARCH_OPT=i386
+#       ;;
     x86_64) export ARCH_BOOTSTRAP_ARCH_OPT=x86_64
         ;;
     all) exit
@@ -26,28 +32,24 @@ mkdir -p $ARCH_DIR
 rm -rf $ROOTFS_DIR
 mkdir -p $ROOTFS_DIR
 
+MACHINE_TYPE=`uname -m`
+if [ ${MACHINE_TYPE} == 'x86_64' ]; then
+wget $MIRROR/$VERSION/main/x86_64/$APK_TOOL
+else
+wget $MIRROR/$VERSION/main/armhf/$APK_TOOL
+fi
+tar -xzf $APK_TOOL
+./sbin/apk.static \
+    -X $MIRROR/$VERSION/main \
+    -U \
+    --allow-untrusted \
+    --root ././$CHROOT \
+    --initdb add alpine-base alpine-sdk
+cp /etc/resolv.conf $CHROOT/etc/
+echo "$MIRROR/$VERSION/main" >  $CHROOT/etc/apk/repositories
+
+# Cleaning up
+rm -rf sbin
+rm -f APK_TOOL
 
 
-LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR sudo apk add dropbear tigervnc xterm xorg-twm expect --noconfirm
-
-echo "127.0.0.1 localhost" > $ROOTFS_DIR/etc/hosts
-echo "nameserver 8.8.8.8" > $ROOTFS_DIR/etc/resolv.conf
-echo "nameserver 8.8.4.4" >> $ROOTFS_DIR/etc/resolv.conf
-
-cp scripts/shrinkRootfs.sh $ROOTFS_DIR
-chmod 777 $ROOTFS_DIR/shrinkRootfs.sh
-LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR ./shrinkRootfs.sh
-rm $ROOTFS_DIR/shrinkRootfs.sh
-
-tar --exclude='dev/*' --exclude='etc/mtab' -czvf $ARCH_DIR/rootfs.tar.gz -C $ROOTFS_DIR .
-
-LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR pacman -S base-devel --noconfirm
-
-#build disableselinux to go with this release
-cp scripts/disableselinux.c $ROOTFS_DIR
-LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR gcc -shared -fpic disableselinux.c -o libdisableselinux.so
-cp $ROOTFS_DIR/libdisableselinux.so $ARCH_DIR/libdisableselinux.so
-
-#get busybox to go with the release
-LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR pacman -S busybox --noconfirm
-cp $ROOTFS_DIR/bin/busybox $ARCH_DIR/busybox
