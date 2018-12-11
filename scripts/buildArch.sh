@@ -26,8 +26,7 @@ mkdir -p $ARCH_DIR
 rm -rf $ROOTFS_DIR
 mkdir -p $ROOTFS_DIR
 
-git clone https://github.com/tokland/arch-bootstrap.git $ARCH_DIR/arch-bootstrap
-$ARCH_DIR/arch-bootstrap/arch-bootstrap.sh $ARCH_BOOTSTRAP_QEMU_OPT -a $ARCH_BOOTSTRAP_ARCH_OPT $ROOTFS_DIR
+
 
 LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR sudo apk add dropbear tigervnc xterm xorg-twm expect --noconfirm
 
