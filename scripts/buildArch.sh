@@ -38,6 +38,7 @@ wget $MIRROR/$VERSION/main/x86_64/$APK_TOOL
 else
 wget $MIRROR/$VERSION/main/armhf/$APK_TOOL
 fi
+
 tar -xzf $APK_TOOL
 ./sbin/apk.static \
     -X $MIRROR/$VERSION/main \
@@ -51,5 +52,3 @@ echo "$MIRROR/$VERSION/main" >  $CHROOT/etc/apk/repositories
 # Cleaning up
 rm -rf sbin
 rm -f APK_TOOL
-
-
