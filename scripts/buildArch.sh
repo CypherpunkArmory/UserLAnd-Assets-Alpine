@@ -32,12 +32,6 @@ mkdir -p $ARCH_DIR
 rm -rf $ROOTFS_DIR
 mkdir -p $ROOTFS_DIR
 
-MACHINE_TYPE=`uname -m`
-if [ ${MACHINE_TYPE} == 'x86_64' ]; then
-wget $MIRROR/$VERSION/main/x86_64/$APK_TOOL
-else
-wget $MIRROR/$VERSION/main/armhf/$APK_TOOL
-
 fi
 
 tar -xzf $APK_TOOL
