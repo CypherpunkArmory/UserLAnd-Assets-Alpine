@@ -5,13 +5,14 @@ export ROOTFS_DIR=$ARCH_DIR/rootfs
 
 case "$1" in
    armhf) export ARCH_BOOTSTRAP_ARCH_OPT=armv7h
-        export ARCH_BOOTSTRAP_QEMU_OPT=-q
-        ;;
+          export ARCH_BOOTSTRAP_QEMU_OPT=-q
+          ;;
    arm64) export ARCH_BOOTSTRAP_ARCH_OPT=aarch64
-      export ARCH_BOOTSTRAP_QEMU_OPT=-q
-      ;;
+          export ARCH_BOOTSTRAP_QEMU_OPT=-q
+          ;;
    x86) export ARCH_BOOTSTRAP_ARCH_OPT=i386
    ;;
+   
    x86_64) export ARCH_BOOTSTRAP_ARCH_OPT=x86_64
    ;;
    all) exit
