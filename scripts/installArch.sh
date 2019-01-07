@@ -12,3 +12,4 @@ then
 fi
 
 rm -f $INSTALL_DIR/assets.txt; for f in $(ls $INSTALL_DIR); do echo "$f $(date +%s -r $INSTALL_DIR/$f)" >> $INSTALL_DIR/assets.txt; done
+
