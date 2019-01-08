@@ -21,15 +21,37 @@ case "$1" in
         ;;
 esac
 
+# APK Tool
+MIRROR=http://dl-5.alpinelinux.org/alpine
+ARCH=$1
+CHROOT=alpine-chroot-newest
+VERSION=latest-stable
+APK_TOOL=apk-tools-static-2.10.1-r0.apk
+
 rm -rf $ARCH_DIR
 mkdir -p $ARCH_DIR
 rm -rf $ROOTFS_DIR
 mkdir -p $ROOTFS_DIR
 
-git clone https://github.com/tokland/arch-bootstrap.git $ARCH_DIR/arch-bootstrap
-$ARCH_DIR/arch-bootstrap/arch-bootstrap.sh $ARCH_BOOTSTRAP_QEMU_OPT -a $ARCH_BOOTSTRAP_ARCH_OPT $ROOTFS_DIR
+# Start Building Alpine
 
-LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR pacman -S sudo dropbear tigervnc xterm xorg-twm expect --noconfirm
+wget $MIRROR/$VERSION/main/$ARCH/$APK_TOOL
+tar -xzf $APK_TOOL
+./sbin/apk.static \
+    -X $MIRROR/$VERSION/main \
+    -U \
+    --allow-untrusted \
+    --root ././$CHROOT \
+    --initdb add alpine-base alpine-sdk
+
+cp /etc/resolv.conf $CHROOT/etc/
+echo "$MIRROR/$VERSION/main" >  $CHROOT/etc/apk/repositories
+
+# Cleaning up
+rm -rf sbin
+rm -f APK_TOOL
+
+LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add sudo dropbear tigervnc xterm xorg-twm expect
 
 echo "127.0.0.1 localhost" > $ROOTFS_DIR/etc/hosts
 echo "nameserver 8.8.8.8" > $ROOTFS_DIR/etc/resolv.conf
@@ -42,13 +64,13 @@ rm $ROOTFS_DIR/shrinkRootfs.sh
 
 tar --exclude='dev/*' --exclude='etc/mtab' -czvf $ARCH_DIR/rootfs.tar.gz -C $ROOTFS_DIR .
 
-LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR pacman -S base-devel --noconfirm
+LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add base-devel
 
 #build disableselinux to go with this release
 cp scripts/disableselinux.c $ROOTFS_DIR
 LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR gcc -shared -fpic disableselinux.c -o libdisableselinux.so
 cp $ROOTFS_DIR/libdisableselinux.so $ARCH_DIR/libdisableselinux.so
 
-#get busybox to go with the release
-LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR pacman -S busybox --noconfirm
-cp $ROOTFS_DIR/bin/busybox $ARCH_DIR/busybox
+# BUSY BOX COMES WITH ALPINE
+#LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add busybox
+#cp $ROOTFS_DIR/bin/busybox $ARCH_DIR/busybox
