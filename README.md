@@ -3,6 +3,6 @@
 A repository for holding Alpine Linux specific assets for UserLAnd
 
 ### Notes:
-Version: alpha 0.4
+Version: beta 1.0
 
 This is maintained by EnderNightLord-Chromebook
