@@ -24,14 +24,14 @@ esac
 # APK Tool
 MIRROR=http://dl-5.alpinelinux.org/alpine
 ARCH=$1
-CHROOT=alpine-chroot-newest
+CHROOT=ROOTFS_DIR
 VERSION=latest-stable
 APK_TOOL=apk-tools-static-2.10.1-r0.apk
 
 rm -rf $ARCH_DIR
 mkdir -p $ARCH_DIR
 rm -rf $ROOTFS_DIR
-mkdir -p $ROOTFS_DIR
+# mkdir -p $ROOTFS_DIR <-- Apk Tool Creates ROOTFS_DIR
 
 # Start Building Alpine
 
