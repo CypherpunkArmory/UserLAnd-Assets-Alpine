@@ -16,4 +16,4 @@ About: https://alpinelinux.org/about/
 
 Package Management: https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management
 
-<img src="https://pkgs.alpinelinux.org/assets/alpinelinux-logo.svg" alt="Image result for alpine linux icon"/>
+<img src="https://github.com/CypherpunkArmory/UserLAnd-Assets-Alpine/blob/Add-Alpine-Icon/icons/Alpine_Icon.svg" alt="Alpine_Linux_Icon"/>
