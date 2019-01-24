@@ -10,7 +10,7 @@ where desiredArch can be arm, arm64, x86, x86_64
 
 ### Notes
 
-this is alomost finished to hope to see it next week!
+Maintained By EnderNightLord-Chromebook
 
 About: https://alpinelinux.org/about/
 
