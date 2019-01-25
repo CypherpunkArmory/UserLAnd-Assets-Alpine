@@ -41,11 +41,11 @@ tar -xzf $APK_TOOL
     -X $MIRROR/$VERSION/main \
     -U \
     --allow-untrusted \
-    --root ././$CHROOT \
+    --root ././$ROOTFS_DIR \
     --initdb add alpine-base alpine-sdk
 
-cp /etc/resolv.conf $CHROOT/etc/
-echo "$MIRROR/$VERSION/main" >  $CHROOT/etc/apk/repositories
+cp /etc/resolv.conf $ROOTFS_DIR/etc/
+echo "$MIRROR/$VERSION/main" >  $ROOTFS_DIR/etc/apk/repositories
 
 # Cleaning up
 rm -rf sbin
