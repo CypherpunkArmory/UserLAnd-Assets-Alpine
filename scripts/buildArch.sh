@@ -42,7 +42,7 @@ tar -xzf $APK_TOOL
     -U \
     --allow-untrusted \
     --root ././$ROOTFS_DIR \
-    --initdb add alpine-base alpine-sdk
+    --initdb add alpine-base alpine-sdk sudo 
 
 cp /etc/resolv.conf $ROOTFS_DIR/etc/
 echo "$MIRROR/$VERSION/main" >  $ROOTFS_DIR/etc/apk/repositories
@@ -51,7 +51,7 @@ echo "$MIRROR/$VERSION/main" >  $ROOTFS_DIR/etc/apk/repositories
 rm -rf sbin
 rm -f $ROOTFS_DIR/APK_TOOL
 
-LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add sudo dropbear tigervnc xterm xorg-twm expect
+LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add sudo dropbear xterm twm expect
 
 echo "127.0.0.1 localhost" > $ROOTFS_DIR/etc/hosts
 echo "nameserver 8.8.8.8" > $ROOTFS_DIR/etc/resolv.conf
