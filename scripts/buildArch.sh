@@ -36,7 +36,7 @@ rm -rf $ROOTFS_DIR
 # Start Building Alpine
 
 wget $MIRROR/$VERSION/main/$ARCH/$APK_TOOL
-tar -xzf $APK_TOOL -C $ROOTFS_DIR
+tar -xzf $APK_TOOL
 ./sbin/apk.static \
     -X $MIRROR/$VERSION/main \
     -U \
