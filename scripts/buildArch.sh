@@ -36,7 +36,7 @@ rm -rf $ROOTFS_DIR
 # Start Building Alpine
 
 wget $MIRROR/$VERSION/main/$ARCH/$APK_TOOL
-tar -xzf $APK_TOOL
+tar -xzf $APK_TOOL -C $ROOTFS_DIR
 ./sbin/apk.static \
     -X $MIRROR/$VERSION/main \
     -U \
@@ -49,7 +49,7 @@ echo "$MIRROR/$VERSION/main" >  $ROOTFS_DIR/etc/apk/repositories
 
 # Cleaning up
 rm -rf sbin
-rm -f APK_TOOL
+rm -f $ROOTFS_DIR/APK_TOOL
 
 LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add sudo dropbear tigervnc xterm xorg-twm expect
 
