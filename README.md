@@ -2,11 +2,16 @@
 
 A repository for holding Alpine Linux specific assets for UserLAnd
 
-After cloning this repo, you simply do the following...
+First You Need To Clone The Repo:
 
-`sudo ./scripts/buildArch.sh $desiredArch ./scripts/installArch.sh $desiredArch`
+`git clone https://github.com/CypherpunkArmory/UserLAnd-Assets-Alpine.git`
 
-where desiredArch can be arm, arm64, x86, x86_64
+Then You Neeed To Build Alpine:
+
+`cd UserLAnd-Assets-Alpine`
+`sudo sh scripts/buildArch.sh x86_64 (or any other arch you want)`
+
+the arch can be arm, arm64, x86 or x86_64
 
 ### Notes
 
