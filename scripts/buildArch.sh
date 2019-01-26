@@ -53,24 +53,18 @@ rm -f $ROOTFS_DIR/APK_TOOL
 
 LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add sudo dropbear xterm twm expect
 
+# Set Resolv.conf
 echo "127.0.0.1 localhost" > $ROOTFS_DIR/etc/hosts
 echo "nameserver 8.8.8.8" > $ROOTFS_DIR/etc/resolv.conf
 echo "nameserver 8.8.4.4" >> $ROOTFS_DIR/etc/resolv.conf
 
+# Shrink Rootfs
 cp scripts/shrinkRootfs.sh $ROOTFS_DIR
 chmod 777 $ROOTFS_DIR/shrinkRootfs.sh
 LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR ./shrinkRootfs.sh
 rm $ROOTFS_DIR/shrinkRootfs.sh
 
+# Add Last Packages
 tar --exclude='dev/*' --exclude='etc/mtab' -czvf $ARCH_DIR/rootfs.tar.gz -C $ROOTFS_DIR .
-
-LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add base-devel
-
-#build disableselinux to go with this release
-cp scripts/disableselinux.c $ROOTFS_DIR
-LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR gcc -shared -fpic disableselinux.c -o libdisableselinux.so
-cp $ROOTFS_DIR/libdisableselinux.so $ARCH_DIR/libdisableselinux.so
-
-# BUSY BOX COMES WITH ALPINE
-#LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add busybox
-#cp $ROOTFS_DIR/bin/busybox $ARCH_DIR/busybox
+LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add busybox
+cp $ROOTFS_DIR/bin/busybox $ARCH_DIR/busybox
