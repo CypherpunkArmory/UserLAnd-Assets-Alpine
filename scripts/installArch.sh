@@ -7,7 +7,4 @@ export INSTALL_DIR=assets/$1
 split -d -b 50M $ARCH_DIR/rootfs.tar.gz "$INSTALL_DIR/rootfs.tar.gz.part"
 cp $ARCH_DIR/busybox $INSTALL_DIR/busybox
 
-fi
-
 rm -f $INSTALL_DIR/assets.txt; for f in $(ls $INSTALL_DIR); do echo "$f $(date +%s -r $INSTALL_DIR/$f)" >> $INSTALL_DIR/assets.txt; done
-
