@@ -4,10 +4,10 @@ export ARCH_DIR=output/${1}
 export ROOTFS_DIR=$ARCH_DIR/rootfs
 
 case "$1" in
-    arm) export ARCH_BOOTSTRAP_ARCH_OPT=armv7h
+    armhf) export ARCH_BOOTSTRAP_ARCH_OPT=armv7h
         export ARCH_BOOTSTRAP_QEMU_OPT=-q
         ;;
-    arm64) export ARCH_BOOTSTRAP_ARCH_OPT=aarch64
+    aarch64) export ARCH_BOOTSTRAP_ARCH_OPT=aarch64
         export ARCH_BOOTSTRAP_QEMU_OPT=-q
         ;;
     x86) export ARCH_BOOTSTRAP_ARCH_OPT=i686
