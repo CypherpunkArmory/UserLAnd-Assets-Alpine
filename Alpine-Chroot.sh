@@ -27,14 +27,6 @@ CHROOT=alpine-chroot-newest
 VERSION=latest-stable
 APK_TOOL=apk-tools-static-2.10.1-r0.apk
 
-# Root has $UID 0
-ROOT_UID=0
-if [ "$UID" != "$ROOT_UID" ]
-then
-    echo "You are not root. Please use su to become root."
-    exit 0
-fi
-
 if [ -d $CHROOT ]
 then
     echo "$CHROOT already exists."
