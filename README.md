@@ -11,7 +11,7 @@ Then You Neeed To Build Alpine:
 `cd UserLAnd-Assets-Alpine`
 `sudo sh scripts/buildArch.sh x86_64 (or any other arch you want)`
 
-the arch can be arm, arm64, x86 or x86_64
+the arch can be armhf, aarch64, x86 or x86_64
 
 ### Notes
 
