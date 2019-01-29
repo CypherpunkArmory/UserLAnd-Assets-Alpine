@@ -4,9 +4,9 @@ export ARCH_DIR=output/${1}
 export ROOTFS_DIR=$ARCH_DIR/rootfs
 
 case "$1" in
-    armhf) export ALPINE_ARCH=armv7h
+    arm) export ALPINE_ARCH=armhf
         ;;
-    aarch64) export ALPINE_ARCH=aarch64
+    arm64) export ALPINE_ARCH=aarch64
         ;;
     x86) export ALPINE_ARCH=x86
         ;;
@@ -29,15 +29,14 @@ mkdir -p $ARCH_DIR
 rm -rf $ROOTFS_DIR
 mkdir -p $ROOTFS_DIR
 
-# Start Building Alpine
-
-wget $MIRROR/$VERSION/main/$ALPINE_ARCH/$APK_TOOL
-tar -xzf $APK_TOOL
-./sbin/apk.static \
+# Get Base Alpine Unpacked
+wget -P $ARCH_DIR $MIRROR/$VERSION/main/$ALPINE_ARCH/$APK_TOOL
+tar -xzf $ARCH_DIR/$APK_TOOL -C $ARCH_DIR
+$ARCH_DIR/sbin/apk.static \
     -X $MIRROR/$VERSION/main \
     -U \
     --allow-untrusted \
-    --root ././$ROOTFS_DIR \
+    --root $ROOTFS_DIR \
     --initdb add alpine-base alpine-sdk sudo 
 
 # Set Resolv.conf
@@ -46,21 +45,21 @@ echo "nameserver 8.8.8.8" > $ROOTFS_DIR/etc/resolv.conf
 echo "nameserver 8.8.4.4" >> $ROOTFS_DIR/etc/resolv.conf
 echo "$MIRROR/$VERSION/main" >  $ROOTFS_DIR/etc/apk/repositories
 
-# Cleaning up
-rm -rf sbin
-rm -f $ROOTFS_DIR/APK_TOOL
-
+# Copy down qemu files if needed
 case "$1" in
-    armhf) cp /usr/bin/qemu-arm-static $ROOTFS_DIR/usr/bin/
+    arm) cp /usr/bin/qemu-arm-static $ROOTFS_DIR/usr/bin/
         ;;
-    aarch64) cp /usr/bin/qemu-aarch64-static $ROOTFS_DIR/usr/bin/
+    arm64) cp /usr/bin/qemu-aarch64-static $ROOTFS_DIR/usr/bin/
         ;;
     *)  ;;
 esac
+
+#Install packages that we will need in UserLAnd
 echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> $ROOTFS_DIR/etc/apk/repositories
 LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk update
 LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add bash sudo dropbear mesa-gl x11vnc xterm twm expect
 
+#Put in place a profile.d script to setup some basic things
 echo "#!/bin/sh" > $ROOTFS_DIR/etc/profile.d/userland.sh
 echo "unset LD_PRELOAD" >> $ROOTFS_DIR/etc/profile.d/userland.sh
 echo "unset LD_LIBRARY_PATH" >> $ROOTFS_DIR/etc/profile.d/userland.sh
@@ -81,6 +80,6 @@ cp scripts/disableselinux.c $ROOTFS_DIR
 LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR gcc -shared -fpic disableselinux.c -o libdisableselinux.so
 cp $ROOTFS_DIR/libdisableselinux.so $ARCH_DIR/libdisableselinux.so
 
-# Add Last Packages
-LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add busybox
-cp $ROOTFS_DIR/bin/busybox $ARCH_DIR/busybox
+# Install and copy busybox
+LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add busybox-static
+cp $ROOTFS_DIR/bin/busybox.static $ARCH_DIR/busybox
