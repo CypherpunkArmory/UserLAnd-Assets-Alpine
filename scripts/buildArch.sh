@@ -22,7 +22,7 @@ esac
 # APK Tool
 MIRROR=http://dl-5.alpinelinux.org/alpine
 VERSION=latest-stable
-APK_TOOL=apk-tools-static-2.10.1-r0.apk
+APK_TOOL=apk-tools-static-2.10.3-r1.apk
 
 rm -rf $ARCH_DIR
 mkdir -p $ARCH_DIR
