@@ -13,5 +13,6 @@ fi
 if [ ! -d "/home/$INITIAL_USERNAME" ]; then
   useradd $INITIAL_USERNAME -s /bin/bash -m -u 2000 
   echo $INITIAL_USERNAME:$INITIAL_PASSWORD | chpasswd
-  chsh -s /bin/ash $INITIAL_USERNAME
+  echo "/bin/bash" >> /etc/shells
+  chsh -s /bin/bash $INITIAL_USERNAME
 fi
