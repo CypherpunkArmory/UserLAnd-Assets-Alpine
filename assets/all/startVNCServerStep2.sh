@@ -13,6 +13,7 @@ mkdir /home/$INITIAL_USERNAME/.vnc
 x11vnc -storepasswd $INITIAL_VNC_PASSWORD /home/$INITIAL_USERNAME/.vnc/passwd
 fi
 
+rm /tmp/.X51-lock
 Xvfb :51 -screen 0 800x640x24 &
 sleep 1
 export DISPLAY=:51
