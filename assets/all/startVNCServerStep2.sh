@@ -14,6 +14,8 @@ x11vnc -storepasswd $INITIAL_VNC_PASSWORD /home/$INITIAL_USERNAME/.vnc/passwd
 fi
 
 Xvfb :51 -screen 0 800x640x24 &
+export DISPLAY=:51
+LANG=C twm &
 x11vnc -xkb -noxrecord -noxfixes -noxdamage -display :51 -N -usepw -shared -noshm &
 VNC_PID=$!
 echo $VNC_PID > /home/$INITIAL_USERNAME/.vnc/localhost:51.pid
