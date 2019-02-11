@@ -9,11 +9,12 @@ if [[ -z "${INITIAL_VNC_PASSWORD}" ]]; then
 fi
 
 if [ ! -f /home/$INITIAL_USERNAME/.vnc/passwd ]; then
-x11vnc -storepasswd $INITIAL_VNC_PASSWORD ~/.vnc/passwd
+mkdir /home/$INITIAL_USERNAME/.vnc 
+x11vnc -storepasswd $INITIAL_VNC_PASSWORD /home/$INITIAL_USERNAME/.vnc/passwd
 fi
 
 Xvfb :51 -screen 0 800x640x24 &
-x11vnc -xkb -noxrecord -noxfixes -noxdamage -display :51 -N -usepw -shared &
+x11vnc -xkb -noxrecord -noxfixes -noxdamage -display :51 -N -usepw -shared -noshm &
 VNC_PID=$!
 echo $VNC_PID > /home/$INITIAL_USERNAME/.vnc/localhost:51.pid
 
