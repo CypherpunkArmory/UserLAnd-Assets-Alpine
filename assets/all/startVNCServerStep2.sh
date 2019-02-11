@@ -8,6 +8,8 @@ if [[ -z "${INITIAL_VNC_PASSWORD}" ]]; then
   INITIAL_VNC_PASSWORD="userland"
 fi
 
+export LD_LIBRARY_PATH=
+
 if [ ! -f /home/$INITIAL_USERNAME/.vnc/passwd ]; then
 mkdir /home/$INITIAL_USERNAME/.vnc 
 x11vnc -storepasswd $INITIAL_VNC_PASSWORD /home/$INITIAL_USERNAME/.vnc/passwd
