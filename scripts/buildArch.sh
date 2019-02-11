@@ -57,7 +57,7 @@ esac
 #Install packages that we will need in UserLAnd
 echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> $ROOTFS_DIR/etc/apk/repositories
 LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk update
-LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add bash sudo dropbear mesa-gl x11vnc xterm twm expect shadow
+LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add bash sudo dropbear mesa-gl xvfb x11vnc xterm twm expect shadow
 
 #Put in place a profile.d script to setup some basic things
 echo "#!/bin/sh" > $ROOTFS_DIR/etc/profile.d/userland.sh

@@ -9,31 +9,13 @@ if [[ -z "${INITIAL_VNC_PASSWORD}" ]]; then
 fi
 
 if [ ! -f /home/$INITIAL_USERNAME/.vnc/passwd ]; then
-
-prog=/usr/bin/vncpasswd
-
-/usr/bin/expect <<EOF
-spawn "$prog"
-expect "Password:"
-send "$INITIAL_VNC_PASSWORD\r"
-expect "Verify:"
-send "$INITIAL_VNC_PASSWORD\r"
-expect "(y/n)?"
-send "n\r"
-expect eof
-exit
-EOF
-
+x11vnc -storepasswd $INITIAL_VNC_PASSWORD ~/.vnc/passwd
 fi
 
-rm /tmp/.X51-lock
-rm /tmp/.X11-unix/X51
-vncserver -kill :51
-vncserver :51 -SecurityTypes=VncAuth
+Xvfb :51 -screen 0 800x640x24 &
+x11vnc -xkb -noxrecord -noxfixes -noxdamage -display :51 -N -usepw -shared &
+VNC_PID=$!
+echo $VNC_PID > /home/$INITIAL_USERNAME/.vnc/localhost:51.pid
 
-while [ ! -f /home/$INITIAL_USERNAME/.vnc/localhost:51.pid ]
-do
-  sleep 1
-done
 cd ~
 DISPLAY=localhost:51 xterm -geometry 80x24+0+0 -e /bin/bash --login &
