@@ -15,6 +15,15 @@ mkdir /home/$INITIAL_USERNAME/.vnc
 x11vnc -storepasswd $INITIAL_VNC_PASSWORD /home/$INITIAL_USERNAME/.vnc/passwd
 fi
 
+if [[ -z "${DIMENSIONS}" ]]; then
+	DIMENSIONS="1024x768"
+fi
+
+if [ ! -f /home/$INITIAL_USERNAME/.vncrc ]; then
+	vncrc_line="\$geometry = \"${DIMENSIONS}\";"
+	echo $vncrc_line > /home/$INITIAL_USERNAME/.vncrc
+fi
+
 rm /tmp/.X51-lock
 Xvfb :51 -screen 0 1024x768x16 &
 sleep 2
