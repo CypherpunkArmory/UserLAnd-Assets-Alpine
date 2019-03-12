@@ -2,7 +2,7 @@
 
 A repository for holding Alpine Linux specific assets for UserLAnd
 
-First You Need To Clone The Repo:
+First You Need To Clone The Repo:    
 
 `git clone https://github.com/CypherpunkArmory/UserLAnd-Assets-Alpine.git`
 
