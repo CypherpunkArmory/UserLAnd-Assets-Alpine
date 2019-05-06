@@ -55,7 +55,7 @@ case "$1" in
 esac
 
 #Install packages that we will need in UserLAnd
-echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> $ROOTFS_DIR/etc/apk/repositories
+echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> $ROOTFS_DIR/etc/apk/repositories
 LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk update
 LC_ALL=C LANGUAGE=C LANG=C chroot $ROOTFS_DIR apk add bash sudo dropbear mesa-gl xvfb x11vnc xsetroot xterm twm expect shadow
 
