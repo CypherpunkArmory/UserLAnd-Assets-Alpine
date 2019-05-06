@@ -20,7 +20,7 @@ case "$1" in
 esac
 
 # APK Tool
-MIRROR=http://dl-5.alpinelinux.org/alpine
+MIRROR=http://dl-cdn.alpinelinux.org/alpine
 VERSION=latest-stable
 APK_TOOL=apk-tools-static-2.10.3-r1.apk
 
