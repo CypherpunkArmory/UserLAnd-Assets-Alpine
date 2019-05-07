@@ -20,5 +20,3 @@ Maintained By EnderNightLord-Chromebook
 About: https://alpinelinux.org/about/
 
 Package Management: https://wiki.alpinelinux.org/wiki/Alpine_Linux_package_management
-
-<img src="https://github.com/CypherpunkArmory/UserLAnd-Assets-Alpine/blob/master/icons/Alpine_Icon.svg" alt="Alpine_Linux_Icon"/>
