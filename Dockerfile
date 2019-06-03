@@ -6,7 +6,4 @@ FROM ${IMAGE_ARCH}/${IMAGE_DISTRO}:${IMAGE_VERSION}
 ARG QEMU_FILE
 ADD ${QEMU_FILE} /usr/bin
 
-ADD input/setup.sh /
-RUN /setup.sh
-
 CMD /input/main.sh
