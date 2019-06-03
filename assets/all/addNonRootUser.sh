@@ -11,6 +11,7 @@ if [[ -z "${INITIAL_VNC_PASSWORD}" ]]; then
 fi
 
 if [ ! -d "/home/$INITIAL_USERNAME" ]; then
+  mkdir -p /var/spool/mail
   useradd $INITIAL_USERNAME -s /bin/bash -m -u 2000 
   echo $INITIAL_USERNAME:$INITIAL_PASSWORD | chpasswd
   echo "/bin/bash" >> /etc/shells
