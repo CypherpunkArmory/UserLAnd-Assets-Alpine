@@ -23,6 +23,9 @@ apk add bash sudo dropbear mesa-gl xvfb x11vnc xsetroot xterm twm expect shadow
 #clean up after ourselves
 apk cache clean
 
+#misc
+mkdir -p /var/mail
+
 #tar up what we have before we grow it
 tar -czvf /output/rootfs.tar.gz --exclude sys --exclude dev --exclude proc --exclude mnt --exclude etc/mtab --exclude output --exclude input --exclude .dockerenv /
 
