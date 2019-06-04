@@ -25,6 +25,7 @@ apk cache clean
 
 #misc
 mkdir -p /var/mail
+echo "auth sufficient pam_shells.so" > /etc/pam.d/chsh
 
 #tar up what we have before we grow it
 tar -czvf /output/rootfs.tar.gz --exclude sys --exclude dev --exclude proc --exclude mnt --exclude etc/mtab --exclude output --exclude input --exclude .dockerenv /
