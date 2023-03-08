@@ -19,20 +19,22 @@ if [[ -z "${DIMENSIONS}" ]]; then
 	DIMENSIONS="1024x768"
 fi
 
-if [ ! -f /home/$INITIAL_USERNAME/.vncrc ]; then
-	vncrc_line="\$geometry = \"${DIMENSIONS}\";"
-	echo $vncrc_line > /home/$INITIAL_USERNAME/.vncrc
+vncrc_line="\$geometry = \"${DIMENSIONS}\";"
+echo $vncrc_line > /home/$INITIAL_USERNAME/.vncrc
+
+if [[ -z "${VNC_DISPLAY}" ]]; then
+  VNC_DISPLAY="51"
 fi
 
-rm /tmp/.X51-lock
-Xvfb :51 -screen 0 1024x768x16 &
+rm /tmp/.X${VNC_DISPLAY}-lock
+Xvfb :${VNC_DISPLAY} -screen 0 1024x768x16 &
 sleep 2
-export DISPLAY=:51
+export DISPLAY=:${VNC_DISPLAY}
 cd ~
 xrdb -load $HOME/.Xresources
 xsetroot -solid gray &
 xterm -geometry 80x24+0+0 -e /bin/bash --login &
 LANG=C twm &
-x11vnc -xkb -noxrecord -noxfixes -noxdamage -display :51 -N -usepw -shared -noshm &
+x11vnc -xkb -noxrecord -noxfixes -noxdamage -display :${VNC_DISPLAY} -N -usepw -shared -noshm &
 VNC_PID=$!
-echo $VNC_PID > /home/$INITIAL_USERNAME/.vnc/localhost:51.pid
+echo $VNC_PID > /home/$INITIAL_USERNAME/.vnc/localhost:${VNC_DISPLAY}.pid
