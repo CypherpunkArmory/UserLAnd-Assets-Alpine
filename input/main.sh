@@ -11,7 +11,7 @@ echo "export LIBGL_ALWAYS_SOFTWARE=1" >> /etc/profile.d/userland.sh
 chmod +x /etc/profile.d/userland.sh
 
 #update our repos so we can install some packages
-echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main" >> /etc/apk/repositories
+echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/main" > /etc/apk/repositories
 echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
 mkdir -p /var/cache/apk
 ln -s /var/cache/apk /etc/apk/cache
