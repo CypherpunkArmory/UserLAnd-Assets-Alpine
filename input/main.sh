@@ -20,6 +20,7 @@ apk update
 #install some packages we need for UserLAnd
 apk add busybox-suid bash sudo dropbear mesa-gl xvfb x11vnc xsetroot xterm twm expect shadow wget curl
 apk add pulseaudio
+chmod +r /bin/bbsuid
 
 #clean up after ourselves
 apk cache clean
